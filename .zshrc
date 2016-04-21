@@ -54,7 +54,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/opt/android-sdk/platform-tools/:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -82,7 +82,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias netrestart="systemctl restart netctl-auto@wlp8s0.service"
+alias netrestart="systemctl restart netctl-auto@wlp5s0.service"
 
 export QT_X11_NO_MITSHM=1
 
@@ -90,3 +90,8 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 
 source /usr/share/zsh-dwim/init.zsh
+
+alias comp="g++ -std=c++14 -O2 -Wall -Wextra "
+alias compd="clang++ -std=c++14 -g3 -Wall -Wextra -fsanitize=undefined -D_GlIBCXX_DEBUG "
+alias compo="clang++ -std=c++14 -O3 -march=native -Wall -Wextra "
+
