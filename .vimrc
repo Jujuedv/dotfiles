@@ -96,3 +96,9 @@ set tabstop=4
 set shiftwidth=4
 :color desert
 filetype plugin on
+filetype plugin indent on
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor = "latex"
+let g:Tex_DefaultTargetFormat = "pdf"
+
+set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
