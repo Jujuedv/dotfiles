@@ -5,9 +5,7 @@ export ZSH=/usr/share/oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="smt"
-#ZSH_THEME="agnoster"
-ZSH_THEME="juanghurtado"
+ZSH_THEME="jujutheme"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -48,6 +46,10 @@ ZSH_THEME="juanghurtado"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
+
+#Powerline stuff
+POWERLINE_PATH="short"
+POWERLINE_RIGHT_A="exit-status-on-fail"
 
 DISABLE_AUTO_UPDATE="true"
 source $ZSH/oh-my-zsh.sh
@@ -90,6 +92,7 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 
 source /usr/share/zsh-dwim/init.zsh
+
 
 alias comp="g++ -std=c++14 -O2 -Wall -Wextra "
 alias compd="clang++ -std=c++14 -g3 -Wall -Wextra -fsanitize=undefined -D_GlIBCXX_DEBUG "
