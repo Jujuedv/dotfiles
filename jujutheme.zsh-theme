@@ -1,158 +1,212 @@
-# FreeAgent puts the powerline style in zsh !
+# vim:ft=zsh ts=2 sw=2 sts=2
+#
+# agnoster's Theme - https://gist.github.com/3712874
+# A Powerline-inspired theme for ZSH
+#
+# # README
+#
+# In order for this theme to render correctly, you will need a
+# [Powerline-patched font](https://github.com/Lokaltog/powerline-fonts).
+# Make sure you have a recent version: the code points that Powerline
+# uses changed in 2012, and older versions will display incorrectly,
+# in confusing ways.
+#
+# In addition, I recommend the
+# [Solarized theme](https://github.com/altercation/solarized/) and, if you're
+# using it on Mac OS X, [iTerm 2](http://www.iterm2.com/) over Terminal.app -
+# it has significantly better color fidelity.
+#
+# # Goals
+#
+# The aim of this theme is to only show you *relevant* information. Like most
+# prompts, it will only show git information when in a git working directory.
+# However, it goes a step further: everything from the current user and
+# hostname to whether the last call exited with an error to whether background
+# jobs are running in this shell will all be displayed automatically when
+# appropriate.
 
-if [ "$POWERLINE_DATE_FORMAT" = "" ]; then
-  POWERLINE_DATE_FORMAT=%D{%Y-%m-%d}
-fi
+### Segment drawing
+# A few utility functions to make it easy and re-usable to draw segmented prompts
 
-if [ "$POWERLINE_RIGHT_B" = "" ]; then
-  POWERLINE_RIGHT_B=%D{%H:%M:%S}
-elif [ "$POWERLINE_RIGHT_B" = "none" ]; then
-  POWERLINE_RIGHT_B=""
-fi
+CURRENT_BG='NONE'
 
-if [ "$POWERLINE_RIGHT_A" = "mixed" ]; then
-  POWERLINE_RIGHT_A=%(?."$POWERLINE_DATE_FORMAT".%F{red}✘ %?)
-elif [ "$POWERLINE_RIGHT_A" = "exit-status" ]; then
-  POWERLINE_RIGHT_A=%(?.%F{green}✔ %?.%F{red}✘ %?)
-elif [ "$POWERLINE_RIGHT_A" = "exit-status-on-fail" ]; then
-  POWERLINE_RIGHT_A=%(?..%F{red}✘ %?)
-elif [ "$POWERLINE_RIGHT_A" = "date" ]; then
-  POWERLINE_RIGHT_A="$POWERLINE_DATE_FORMAT"
-fi
+# Special Powerline characters
 
-if [ "$POWERLINE_SHORT_HOST_NAME" = "" ]; then
-    POWERLINE_HOST_NAME="%M"
-else
-    POWERLINE_HOST_NAME="%m"
-fi
+() {
+  local LC_ALL="" LC_CTYPE="en_US.UTF-8"
+  # NOTE: This segment separator character is correct.  In 2012, Powerline changed
+  # the code points they use for their special characters. This is the new code point.
+  # If this is not working for you, you probably have an old version of the
+  # Powerline-patched fonts installed. Download and install the new version.
+  # Do not submit PRs to change this unless you have reviewed the Powerline code point
+  # history and have new information.
+  # This is defined using a Unicode escape sequence so it is unambiguously readable, regardless of
+  # what font the user is viewing this source code in. Do not replace the
+  # escape sequence with a single literal character.
+  # Do not change this! Do not make it '\u2b80'; that is the old, wrong code point.
+  SEGMENT_SEPARATOR=$'\ue0b0'
+}
 
-if [ "$POWERLINE_HIDE_USER_NAME" = "" ] && [ "$POWERLINE_HIDE_HOST_NAME" = "" ]; then
-    POWERLINE_USER_NAME="%n@$POWERLINE_HOST_NAME"
-elif [ "$POWERLINE_HIDE_USER_NAME" != "" ] && [ "$POWERLINE_HIDE_HOST_NAME" = "" ]; then
-    POWERLINE_USER_NAME="@$POWERLINE_HOST_NAME"
-elif [ "$POWERLINE_HIDE_USER_NAME" = "" ] && [ "$POWERLINE_HIDE_HOST_NAME" != "" ]; then
-    POWERLINE_USER_NAME="%n"
-else
-    POWERLINE_USER_NAME=""
-fi
-
-if [ "$POWERLINE_PATH" = "full" ]; then
-  POWERLINE_PATH="%1~"
-elif [ "$POWERLINE_PATH" = "short" ]; then
-  POWERLINE_PATH="%~"
-else
-  POWERLINE_PATH="%d"
-fi
-
-if [ "$POWERLINE_CUSTOM_CURRENT_PATH" != "" ]; then
-  POWERLINE_CURRENT_PATH="$POWERLINE_CUSTOM_CURRENT_PATH"
-fi
-
-if [ "$POWERLINE_GIT_CLEAN" = "" ]; then
-  POWERLINE_GIT_CLEAN="✔"
-fi
-
-if [ "$POWERLINE_GIT_DIRTY" = "" ]; then
-  POWERLINE_GIT_DIRTY="✘"
-fi
-
-if [ "$POWERLINE_GIT_ADDED" = "" ]; then
-  POWERLINE_GIT_ADDED="%F{green}✚%F{black}"
-fi
-
-if [ "$POWERLINE_GIT_MODIFIED" = "" ]; then
-  POWERLINE_GIT_MODIFIED="%F{blue}✹%F{black}"
-fi
-
-if [ "$POWERLINE_GIT_DELETED" = "" ]; then
-  POWERLINE_GIT_DELETED="%F{red}✖%F{black}"
-fi
-
-if [ "$POWERLINE_GIT_UNTRACKED" = "" ]; then
-  POWERLINE_GIT_UNTRACKED="%F{yellow}✭%F{black}"
-fi
-
-if [ "$POWERLINE_GIT_RENAMED" = "" ]; then
-  POWERLINE_GIT_RENAMED="➜"
-fi
-
-if [ "$POWERLINE_GIT_UNMERGED" = "" ]; then
-  POWERLINE_GIT_UNMERGED="═"
-fi
-
-if [ "$POWERLINE_RIGHT_A_COLOR_FRONT" = "" ]; then
-  POWERLINE_RIGHT_A_COLOR_FRONT="white"
-fi
-
-if [ "$POWERLINE_RIGHT_A_COLOR_BACK" = "" ]; then
-  POWERLINE_RIGHT_A_COLOR_BACK="black"
-fi
-
-ZSH_THEME_GIT_PROMPT_PREFIX=" \ue0a0 "
-ZSH_THEME_GIT_PROMPT_SUFFIX=""
-ZSH_THEME_GIT_PROMPT_DIRTY=" $POWERLINE_GIT_DIRTY"
-ZSH_THEME_GIT_PROMPT_CLEAN=" $POWERLINE_GIT_CLEAN"
-
-ZSH_THEME_GIT_PROMPT_ADDED=" $POWERLINE_GIT_ADDED"
-ZSH_THEME_GIT_PROMPT_MODIFIED=" $POWERLINE_GIT_MODIFIED"
-ZSH_THEME_GIT_PROMPT_DELETED=" $POWERLINE_GIT_DELETED"
-ZSH_THEME_GIT_PROMPT_UNTRACKED=" $POWERLINE_GIT_UNTRACKED"
-ZSH_THEME_GIT_PROMPT_RENAMED=" $POWERLINE_GIT_RENAMED"
-ZSH_THEME_GIT_PROMPT_UNMERGED=" $POWERLINE_GIT_UNMERGED"
-ZSH_THEME_GIT_PROMPT_AHEAD=" ⬆"
-ZSH_THEME_GIT_PROMPT_BEHIND=" ⬇"
-ZSH_THEME_GIT_PROMPT_DIVERGED=" ⬍"
-
-# if [ "$(git_prompt_info)" = "" ]; then
-   # POWERLINE_GIT_INFO_LEFT=""
-   # POWERLINE_GIT_INFO_RIGHT=""
-# else
-    if [ "$POWERLINE_SHOW_GIT_ON_RIGHT" = "" ]; then
-        if [ "$POWERLINE_HIDE_GIT_PROMPT_STATUS" = "" ]; then
-            POWERLINE_GIT_INFO_LEFT=" %F{blue}%K{white}"$'\ue0b0'"%F{white}%F{black}%K{white}"$'$(git_prompt_info)$(git_prompt_status)%F{white}'
-        else
-            POWERLINE_GIT_INFO_LEFT=" %F{blue}%K{white}"$'\ue0b0'"%F{white}%F{black}%K{white}"$'$(git_prompt_info)%F{white}'
-        fi
-        POWERLINE_GIT_INFO_RIGHT=""
-    else
-        POWERLINE_GIT_INFO_LEFT=""
-        if [ "$POWERLINE_HIDE_GIT_PROMPT_STATUS" = "" ]; then
-            POWERLINE_GIT_INFO_RIGHT="%F{white}"$'\ue0b2'"%F{black}%K{white}"$'$(git_prompt_info)$(git_prompt_status)'" %K{white}"
-        else
-            POWERLINE_GIT_INFO_RIGHT="%F{white}"$'\ue0b2'"%F{black}%K{white}"$'$(git_prompt_info)'" %K{white}"
-        fi
-    fi
-# fi
-
-if [ $(id -u) -eq 0 ]; then
-    POWERLINE_SEC1_BG=%K{red}
-    POWERLINE_SEC1_FG=%F{red}
-else
-    POWERLINE_SEC1_BG=%K{green}
-    POWERLINE_SEC1_FG=%F{green}
-fi
-POWERLINE_SEC1_TXT=%F{black}
-if [ "$POWERLINE_DETECT_SSH" != "" ]; then
-  if [ -n "$SSH_CLIENT" ]; then
-    POWERLINE_SEC1_BG=%K{red}
-    POWERLINE_SEC1_FG=%F{red}
-    POWERLINE_SEC1_TXT=%F{white}
+# Begin a segment
+# Takes two arguments, background and foreground. Both can be omitted,
+# rendering default background/foreground.
+prompt_segment() {
+  local bg fg
+  [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
+  [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
+  if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
+    echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+  else
+    echo -n "%{$bg%}%{$fg%} "
   fi
-fi
-PROMPT="$POWERLINE_SEC1_BG$POWERLINE_SEC1_TXT $POWERLINE_USER_NAME %k%f$POWERLINE_SEC1_FG%K{blue}"$'\ue0b0'"%k%f%F{white}%K{blue} "$POWERLINE_PATH"%F{blue}"$POWERLINE_GIT_INFO_LEFT" %k"$'\ue0b0'" 
-%{%k%F{green}%}"$'\ue0b0'"%{%f%}"
+  CURRENT_BG=$1
+  [[ -n $3 ]] && echo -n $3
+}
 
-if [ "$POWERLINE_NO_BLANK_LINE" = "" ]; then
-    PROMPT="
-"$PROMPT
-fi
+# End the prompt, closing any open segments
+prompt_end() {
+  if [[ -n $CURRENT_BG ]]; then
+    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+  else
+    echo -n "%{%k%}"
+  fi
+  echo -n "%{%f%}"
+  CURRENT_BG=''
+}
 
-if [ "$POWERLINE_DISABLE_RPROMPT" = "" ]; then
-    if [ "$POWERLINE_RIGHT_A" = "" ]; then
-        RPROMPT="$POWERLINE_GIT_INFO_RIGHT%F{white}"$'\ue0b2'"%k%F{black}%K{white} $POWERLINE_RIGHT_B %f%k"
-    elif [ "$POWERLINE_RIGHT_B" = "" ]; then
-        RPROMPT="$POWERLINE_GIT_INFO_RIGHT%F{white}"$'\ue0b2'"%k%F{$POWERLINE_RIGHT_A_COLOR_FRONT}%K{$POWERLINE_RIGHT_A_COLOR_BACK} $POWERLINE_RIGHT_A %f%k"
+### Prompt components
+# Each component will draw itself, and hide itself if no information needs to be shown
+
+# Context: user@hostname (who am I and where am I)
+prompt_context() {
+  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    prompt_segment green default "%(!.%{%F{black}%}.)$USER@%m"
+  fi
+}
+
+# Git: branch/detached head, dirty status
+prompt_git() {
+
+  local PL_BRANCH_CHAR
+  () {
+    local LC_ALL="" LC_CTYPE="en_US.UTF-8"
+    PL_BRANCH_CHAR=$'\ue0a0'         # 
+  }
+  local ref dirty mode repo_path
+  repo_path=$(git rev-parse --git-dir 2>/dev/null)
+
+  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    dirty=$(parse_git_dirty)
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git rev-parse --short HEAD 2> /dev/null)"
+    if [[ -n $dirty ]]; then
+      prompt_segment yellow black
     else
-        RPROMPT="$POWERLINE_GIT_INFO_RIGHT%F{white}"$'\ue0b2'"%k%F{black}%K{white} $POWERLINE_RIGHT_B %f%F{$POWERLINE_RIGHT_A_COLOR_BACK}"$'\ue0b2'"%f%k%K{$POWERLINE_RIGHT_A_COLOR_BACK}%F{$POWERLINE_RIGHT_A_COLOR_FRONT} $POWERLINE_RIGHT_A %f%k"
+      prompt_segment green black
     fi
-fi
+
+    if [[ -e "${repo_path}/BISECT_LOG" ]]; then
+      mode=" <B>"
+    elif [[ -e "${repo_path}/MERGE_HEAD" ]]; then
+      mode=" >M<"
+    elif [[ -e "${repo_path}/rebase" || -e "${repo_path}/rebase-apply" || -e "${repo_path}/rebase-merge" || -e "${repo_path}/../.dotest" ]]; then
+      mode=" >R>"
+    fi
+
+    setopt promptsubst
+    autoload -Uz vcs_info
+
+    zstyle ':vcs_info:*' enable git
+    zstyle ':vcs_info:*' get-revision true
+    zstyle ':vcs_info:*' check-for-changes true
+    zstyle ':vcs_info:*' stagedstr '✚'
+    zstyle ':vcs_info:*' unstagedstr '●'
+    zstyle ':vcs_info:*' formats ' %u%c'
+    zstyle ':vcs_info:*' actionformats ' %u%c'
+    vcs_info
+    echo -n "${ref/refs\/heads\//$PL_BRANCH_CHAR }${vcs_info_msg_0_%% }${mode}"
+  fi
+}
+
+prompt_hg() {
+  local rev status
+  if $(hg id >/dev/null 2>&1); then
+    if $(hg prompt >/dev/null 2>&1); then
+      if [[ $(hg prompt "{status|unknown}") = "?" ]]; then
+        # if files are not added
+        prompt_segment red white
+        st='±'
+      elif [[ -n $(hg prompt "{status|modified}") ]]; then
+        # if any modification
+        prompt_segment yellow black
+        st='±'
+      else
+        # if working copy is clean
+        prompt_segment green black
+      fi
+      echo -n $(hg prompt "☿ {rev}@{branch}") $st
+    else
+      st=""
+      rev=$(hg id -n 2>/dev/null | sed 's/[^-0-9]//g')
+      branch=$(hg id -b 2>/dev/null)
+      if `hg st | grep -q "^\?"`; then
+        prompt_segment red black
+        st='±'
+      elif `hg st | grep -q "^[MA]"`; then
+        prompt_segment yellow black
+        st='±'
+      else
+        prompt_segment green black
+      fi
+      echo -n "☿ $rev@$branch" $st
+    fi
+  fi
+}
+
+# Dir: current working directory
+prompt_dir() {
+  prompt_segment blue white '%~'
+}
+
+# Virtualenv: current working virtualenv
+prompt_virtualenv() {
+  local virtualenv_path="$VIRTUAL_ENV"
+  if [[ -n $virtualenv_path && -n $VIRTUAL_ENV_DISABLE_PROMPT ]]; then
+    prompt_segment blue black "(`basename $virtualenv_path`)"
+  fi
+}
+
+# Status:
+# - was there an error
+# - am I root
+# - are there background jobs?
+prompt_status() {
+  local symbols
+  symbols=()
+  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$RETVAL"
+  [[ $UID -eq 0 ]] && symbols+="%{%F{green}%}⚡"
+  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
+
+  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+}
+
+prompt_prompt() {
+  local symbols
+  symbols=()
+  [[ $UID -eq 0 ]] && echo -n "#" || echo -n "$"
+}
+
+## Main prompt
+build_prompt() {
+  RETVAL=$?
+  prompt_status
+  prompt_virtualenv
+  prompt_context
+  prompt_dir
+  prompt_git
+  prompt_hg
+  prompt_end
+	echo -n "\n"
+	prompt_prompt
+}
+
+PROMPT='%{%f%b%k%}$(build_prompt) '
