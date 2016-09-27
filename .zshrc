@@ -95,6 +95,12 @@ source /usr/share/zsh-dwim/init.zsh
 
 
 alias comp="g++ -std=c++14 -O2 -Wall -Wextra "
-alias compd="clang++ -std=c++14 -g3 -Wall -Wextra -fsanitize=undefined -D_GlIBCXX_DEBUG "
+alias compd="clang++ -std=c++14 -g3 -Wall -Wextra -fsanitize=undefined -fsanitize=address -D_GlIBCXX_DEBUG "
 alias compo="clang++ -std=c++14 -O3 -march=native -Wall -Wextra "
+
+alias dcj='~/contests/codejam/dcj/dcj.sh'
+
+alias fts='gradle build -x checkstyleMain -x checkstyleTest -x findbugsMain -x findbugsTest -x pmdMain -x pmdTest -x test; cd build/libs; rm testtmp -r; java -Djava.jacoco.agent=/home/julian/uni/sopra/core/jacocoagent.jar -jar core-1.0-SNAPSHOT.jar -test core-1.0-SNAPSHOT.jar -port 4040 -timeout 1000 -json out.json; cd ../..'
+
+export TERM=xterm-256color
 
