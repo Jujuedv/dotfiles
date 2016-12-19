@@ -30,6 +30,71 @@
 
 CURRENT_BG='NONE'
 
+black=016
+white=231
+
+green=002
+darkestgreen=022
+darkgreen=028
+mediumgreen=070
+brightgreen=148
+orangegreen=058
+
+darkestcyan=023
+darkcyan=074
+mediumcyan=117
+brightcyan=159
+
+darkestblue=024
+darkblue=031
+
+red=001
+darkestred=052
+darkred=088
+mediumred=124
+brightred=160
+brightestred=196
+
+darkestpurple=055
+mediumpurple=098
+brightpurple=189
+
+darkorange=094
+mediumorange=166
+brightorange=208
+brightestorange=214
+
+yellow=011
+brightyellow=220
+
+blue=021
+
+gray0=233
+gray1=235
+gray2=236
+gray3=239
+gray4=240
+gray5=241
+gray6=244
+gray7=245
+gray8=247
+gray9=250
+gray10=252
+
+gray11=234
+gray90=254
+
+gray70=249
+
+lightyellowgreen=106
+gold3=178
+orangered=202
+
+steelblue=067
+darkorange3=166
+skyblue1=117
+khaki1=228
+
 # Special Powerline characters
 
 () {
@@ -52,10 +117,10 @@ CURRENT_BG='NONE'
 # rendering default background/foreground.
 prompt_segment() {
   local bg fg
-  [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
-  [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
+  [[ -n $1 ]] && bg="$BG[$1]" || bg="%k"
+  [[ -n $2 ]] && fg="$FG[$2]" || fg="%f"
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-    echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+    echo -n " %{$bg$FG[$CURRENT_BG]%}$SEGMENT_SEPARATOR%{$fg%} "
   else
     echo -n "%{$bg%}%{$fg%} "
   fi
@@ -66,7 +131,7 @@ prompt_segment() {
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+    echo -n " %{%k$FG[$CURRENT_BG]%}$SEGMENT_SEPARATOR"
   else
     echo -n "%{%k%}"
   fi
@@ -80,7 +145,7 @@ prompt_end() {
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
   if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment green default "%(!.%{%F{black}%}.)$USER@%m"
+    prompt_segment $darkestgreen $white "$USER@%m"
   fi
 }
 
@@ -99,9 +164,9 @@ prompt_git() {
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git rev-parse --short HEAD 2> /dev/null)"
     if [[ -n $dirty ]]; then
-      prompt_segment yellow black
+      prompt_segment $orangegreen $black
     else
-      prompt_segment green black
+      prompt_segment $mediumgreen $black
     fi
 
     if [[ -e "${repo_path}/BISECT_LOG" ]]; then
@@ -133,15 +198,15 @@ prompt_hg() {
     if $(hg prompt >/dev/null 2>&1); then
       if [[ $(hg prompt "{status|unknown}") = "?" ]]; then
         # if files are not added
-        prompt_segment red white
+        prompt_segment $red $white
         st='±'
       elif [[ -n $(hg prompt "{status|modified}") ]]; then
         # if any modification
-        prompt_segment yellow black
+        prompt_segment $yellow $black
         st='±'
       else
         # if working copy is clean
-        prompt_segment green black
+        prompt_segment $green $black
       fi
       echo -n $(hg prompt "☿ {rev}@{branch}") $st
     else
@@ -149,13 +214,13 @@ prompt_hg() {
       rev=$(hg id -n 2>/dev/null | sed 's/[^-0-9]//g')
       branch=$(hg id -b 2>/dev/null)
       if `hg st | grep -q "^\?"`; then
-        prompt_segment red black
+        prompt_segment $red $black
         st='±'
       elif `hg st | grep -q "^[MA]"`; then
-        prompt_segment yellow black
+        prompt_segment $yellow $black
         st='±'
       else
-        prompt_segment green black
+        prompt_segment $green $black
       fi
       echo -n "☿ $rev@$branch" $st
     fi
@@ -164,14 +229,14 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue white '%~'
+  prompt_segment $darkgreen $white '%~'
 }
 
 # Virtualenv: current working virtualenv
 prompt_virtualenv() {
   local virtualenv_path="$VIRTUAL_ENV"
   if [[ -n $virtualenv_path && -n $VIRTUAL_ENV_DISABLE_PROMPT ]]; then
-    prompt_segment blue black "(`basename $virtualenv_path`)"
+    prompt_segment $blue $black "(`basename $virtualenv_path`)"
   fi
 }
 
@@ -182,11 +247,11 @@ prompt_virtualenv() {
 prompt_status() {
   local symbols
   symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$RETVAL"
-  [[ $UID -eq 0 ]] && symbols+="%{%F{green}%}⚡"
-  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
+  [[ $RETVAL -ne 0 ]] && symbols+="%{$FG[$red]%}$RETVAL"
+  [[ $UID -eq 0 ]] && symbols+="%{$FG[$green]%}⚡"
+  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{$FG[cyan]%}⚙"
 
-  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+  [[ -n "$symbols" ]] && prompt_segment $black default "$symbols"
 }
 
 prompt_prompt() {

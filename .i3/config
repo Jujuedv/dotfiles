@@ -152,11 +152,26 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec sh -c '[$(echo "n/y" | dmenu -sb "#ff6600" -i -p "Really exit i3 X session?") = y* ] && i3-msg exit'
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
+
+bindsym $mod+Tab workspace back_and_forth
+
+#bindsym $mod+t exec --no-startup-id sh -c 'i3-msg workspace $(~/.config/i3/get_workspaces.py | dmenu -sb \\"{{ special }}\\" -i -p \\"switch workspace\\" -fn \\"terminesspowerline-8\\")'
+
+#bindsym $mod+Shift+t exec --no-startup-id sh -c 'i3-msg move container to workspace $(~/.config/i3/get_workspaces.py | dmenu -sb \\"{{ special }}\\" -i -p \\"move to workspace\\" -fn \\"terminesspowerline-8\\")'
+
+bindsym $mod+m scratchpad show
+bindsym $mod+Shift+m move scratchpad
+
+for_window[title="^Scratch$"] move scratchpad
+
+exec --no-startup-id /usr/bin/compton -b -c --config ~/.config/compton/config # transparency+shadows
+##exec --no-startup-id ~/utils/randomPokemonWallpaper # wallpaper
+exec --no-startup-id ~/.fehbg
+exec --no-startup-id xfce4-terminal --title=Scratch --hide-borders
+
 # resize window (you can also use the mouse for that)
 
-exec_always --no-startup-id pkill -f 'python .*powerline-lemonbar\.py'
-
-exec_always --no-startup-id sleep 0.01 && ~/Repos/powerline/powerline/bindings/lemonbar/powerline-lemonbar.py --i3 --height 32 -- -b -f "DejaVu Sans Mono for Powerline-9" -f Icon-9
+exec --no-startup-id powerline-lemonbar --i3 --click --height 32 -- -a 40 -b -f "DejaVu Sans Mono for Powerline-10" -f "FontAwesome-10"
  
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -190,6 +205,29 @@ bindsym $mod+r mode "resize"
 #}
 
 
+set $background #000000
+set $foreground #FFFFFF
+set $gray       #454749
+set $primary    #00aa44
+set $secondary  #009944
+set $tertiary   #5555ff
+set $warning    #005f5f
+
+## looks
+
+#new_window pixel 4
+gaps inner 6
+gaps outer 4
+#smart_gaps on
+#smart_borders on
+
+## colours
+
+#type     border  background text  indicator
+client.focused          $primary    $primary    $background $primary
+client.focused_inactive $secondary 	$secondary 	$background $secondary
+client.unfocused        $secondary 	$secondary 	$background $secondary
+client.urgent           $warning    $warning    $foreground $warning
 
 bindsym $mod+F11 exec setxkbmap de
 bindsym $mod+F12 exec setxkbmap de neo
