@@ -216,8 +216,8 @@ set $warning    #005f5f
 ## looks
 
 #new_window pixel 4
-gaps inner 6
-gaps outer 4
+gaps inner 3
+gaps outer 2
 #smart_gaps on
 #smart_borders on
 
