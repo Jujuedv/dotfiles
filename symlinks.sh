@@ -59,7 +59,7 @@ do
 	then
 		echo "linking \"$FROM\"->\"$TO\""
 		mkdir -p "$(dirname $TO)"
-		if [ -e "$TO" ]
+		if [ -L "$TO" ]
 		then
 			rm "$TO"
 		fi
@@ -78,7 +78,7 @@ do
 	then
 		echo "linking \"$FROM\"->\"$TO\""
 		sudo mkdir -p "$(dirname $TO)"
-		if [ -e "$TO" ]
+		if [ -L "$TO" ]
 		then
 			sudo rm "$TO"
 		fi
