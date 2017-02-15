@@ -1,2 +1,2 @@
-#!/bin/sh
-feh  --bg-scale '/home/julian/projects/MandelBuddhaManager/render/34.png' 
+#!/bin/bash
+feh  --bg-scale --randomize /home/julian/projects/backgrounds/3840x2160/*green*
