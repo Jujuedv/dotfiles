@@ -22,48 +22,15 @@
                 }
             },
             {
-                "function": "powerline.segments.common.net.wireless",
-                "args": {
-                    "device": "wlp5s0"
-                }
-            },
-            {
                 "function": "powerline.segments.common.net.internal_ip",
                 "args": {
-                    "interface": "enp4s0"
-                }
-            },
-            {
-                "function": "powerline.segments.common.net.internal_ip",
-                "args": {
-                    "interface": "wlp5s0"
+                    "interface": "enp0s31f6"
                 }
             },
             {
                 "function": "powerline.segments.common.net.internal_ip",
                 "args": {
                     "interface": "tun0"
-                }
-            },
-            {
-                "function": "powerline.segments.common.bat.battery",
-                "args": {
-                    "format": "♥ {capacity:3.2%}",
-                    "original_health": true
-                }
-            },
-            {
-                "function": "powerline.segments.common.bat.battery",
-                "args": {
-                    "format": "{status}",
-                    "original_health": true
-                }
-            },
-            {
-                "function": "powerline.segments.common.bat.battery",
-                "args": {
-                    "format": "{rem_time_hours:02}:{rem_time_minutes:02}",
-                    "original_health": true
                 }
             },
 			{
