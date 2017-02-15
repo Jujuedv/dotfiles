@@ -2,19 +2,6 @@
 	"segments": {
 		"right": [
 			{
-				"function": "powerline.segments.common.players.gpmdp",
-				"args": {
-					"format": "{state_symbol} {artist} - {title} ({elapsed}/{total})",
-					"state_symbols" : {
-						"play" : "‣",
-						"pause" : "✘",
-						"stop" : "",
-						"fallback" : ""
-					},
-					"auto_disable":true
-                }
-            },
-			{
 				"function": "powerline.segments.common.volume.vol",
 				"args": {
 					"format": "♫ {volume:2.0%}",
