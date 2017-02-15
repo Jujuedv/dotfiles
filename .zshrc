@@ -98,3 +98,5 @@ alias comp="g++ -std=c++14 -O2 -Wall -Wextra "
 alias compd="clang++ -std=c++14 -g3 -Wall -Wextra -fsanitize=undefined -D_GlIBCXX_DEBUG "
 alias compo="clang++ -std=c++14 -O3 -march=native -Wall -Wextra "
 
+# Report CPU usage for commands running longer than 10 seconds
+REPORTTIME=1
