@@ -84,7 +84,7 @@ export PATH=$HOME/bin:/usr/local/bin:/opt/android-sdk/platform-tools/:$PATH
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias netrestart="systemctl restart netctl-auto@wlp5s0.service"
+alias netrestart="sudo systemctl restart netctl-auto@wlp5s0.service"
 
 export QT_X11_NO_MITSHM=1
 
@@ -98,9 +98,11 @@ alias comp="g++ -std=c++14 -O2 -Wall -Wextra "
 alias compd="g++ -std=c++14 -g3 -Wall -Wextra -fsanitize=undefined -fsanitize=address -D_GLIBCXX_DEBUG "
 alias compo="clang++ -std=c++14 -O3 -march=native -Wall -Wextra "
 
+alias touchrestart="sudo rmmod psmouse ; sudo insmod /usr/lib/modules/4.8.13-1-ARCH/kernel/drivers/input/mouse/psmouse.ko.gz"
+
 alias dcj='~/contests/codejam/dcj/dcj.sh'
 
 export TERM=xterm-256color
 
-# Report CPU usage for commands running longer than 10 seconds
+# Report CPU usage for commands running longer than 1 seconds
 REPORTTIME=1
