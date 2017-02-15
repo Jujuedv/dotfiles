@@ -94,10 +94,16 @@ set number
 set relativenumber
 set tabstop=4
 set shiftwidth=4
+set laststatus=2
+
+let g:airline_powerline_fonts=1
+let g:airline_theme='jujuedv'
+
 :color desert
 filetype plugin on
 filetype plugin indent on
 set grepprg=grep\ -nH\ $*
+let g:Tex_CompileRule_pdf = "lualatex"
 let g:tex_flavor = "latex"
 let g:Tex_DefaultTargetFormat = "pdf"
 let g:Tex_ViewRule_pdf = "exec evince"

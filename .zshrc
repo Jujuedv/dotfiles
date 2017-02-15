@@ -95,8 +95,12 @@ source /usr/share/zsh-dwim/init.zsh
 
 
 alias comp="g++ -std=c++14 -O2 -Wall -Wextra "
-alias compd="clang++ -std=c++14 -g3 -Wall -Wextra -fsanitize=undefined -D_GlIBCXX_DEBUG "
+alias compd="g++ -std=c++14 -g3 -Wall -Wextra -fsanitize=undefined -fsanitize=address -D_GLIBCXX_DEBUG "
 alias compo="clang++ -std=c++14 -O3 -march=native -Wall -Wextra "
+
+alias dcj='~/contests/codejam/dcj/dcj.sh'
+
+export TERM=xterm-256color
 
 # Report CPU usage for commands running longer than 10 seconds
 REPORTTIME=1
