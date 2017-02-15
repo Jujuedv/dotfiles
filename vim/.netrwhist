@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/julian/contests'
+let g:netrw_dirhist_2='/home/julian/contests/nwerc'
+let g:netrw_dirhist_3='/home/julian/contests/nwerc/1'
+let g:netrw_dirhist_4='/home/julian/.screenlayout'
+let g:netrw_dirhist_5='/home/julian/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu'
+let g:netrw_dirhist_6='/etc/X11/xorg.conf.d'
+let g:netrw_dirhist_7='/etc/X11'
+let g:netrw_dirhist_8='/home/julian/projects/Crawler'
+let g:netrw_dirhist_9='/home/julian/bwinf/aioi/tasks/woods'

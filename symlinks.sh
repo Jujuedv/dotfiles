@@ -41,10 +41,10 @@ then
 fi
 
 #customization here
-SYMLINKS_REL+=(".xinitrc\0.xinitrc")
-SYMLINKS_REL+=(".vimrc\0.vimrc")
-SYMLINKS_REL+=(".vim\0.vim")
-SYMLINKS_REL+=(".zshrc\0.zshrc")
+SYMLINKS_REL+=("xinitrc\0.xinitrc")
+SYMLINKS_REL+=("vimrc\0.vimrc")
+SYMLINKS_REL+=("vim\0.vim")
+SYMLINKS_REL+=("zshrc\0.zshrc")
 
 SYMLINKS_ABS+=("jujutheme.zsh-theme\0/usr/share/oh-my-zsh/custom/jujutheme.zsh-theme")
 
