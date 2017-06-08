@@ -95,7 +95,7 @@ source /usr/share/zsh-dwim/init.zsh
 
 
 alias comp="g++ -std=c++1z -O2 -Wall -Wextra "
-alias compd="g++ -std=c++1z -g3 -Wall -Wextra -fsanitize=undefined -fsanitize=address -D_GLIBCXX_DEBUG "
+alias compd="g++ -std=c++1z -g3 -Weverything -Wno-shadow-field-in-constructor -Wno-c++98-compat -Wno-missing-prototypes -Wno-c++98-compat-pedantic -Wno-shorten-64-to-32 -Wno-missing-variable-declarations -Wno-exit-time-destructors -Wno-global-constructors -Wno-padded -Wno-sign-conversion -fsanitize=undefined -fsanitize=address -D_GLIBCXX_DEBUG "
 alias compo="clang++ -std=c++1z -O3 -march=native -Wall -Wextra "
 
 alias touchrestart="sudo rmmod psmouse ; sudo insmod /usr/lib/modules/$(uname -r)/kernel/drivers/input/mouse/psmouse.ko.gz"
