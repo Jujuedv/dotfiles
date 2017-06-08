@@ -94,15 +94,22 @@ export EDITOR="$VISUAL"
 source /usr/share/zsh-dwim/init.zsh
 
 
-alias comp="g++ -std=c++14 -O2 -Wall -Wextra "
-alias compd="g++ -std=c++14 -g3 -Wall -Wextra -fsanitize=undefined -fsanitize=address -D_GLIBCXX_DEBUG "
-alias compo="clang++ -std=c++14 -O3 -march=native -Wall -Wextra "
+alias comp="g++ -std=c++1z -O2 -Wall -Wextra "
+alias compd="g++ -std=c++1z -g3 -Wall -Wextra -fsanitize=undefined -fsanitize=address -D_GLIBCXX_DEBUG "
+alias compo="clang++ -std=c++1z -O3 -march=native -Wall -Wextra "
 
-alias touchrestart="sudo rmmod psmouse ; sudo insmod /usr/lib/modules/4.8.13-1-ARCH/kernel/drivers/input/mouse/psmouse.ko.gz"
+alias touchrestart="sudo rmmod psmouse ; sudo insmod /usr/lib/modules/$(uname -r)/kernel/drivers/input/mouse/psmouse.ko.gz"
 
 alias dcj='~/contests/codejam/dcj/dcj.sh'
+
+alias newsandbox="isolate --init --cg"
+alias sandbox="isolate --dir=etc --dir=boot --dir=home --dir=opt --dir=root --dir=sbin --dir=tmp --cg --cg-timing --chdir=$(pwd) --full-env --processes=100 --meta=/tmp/boxmeta --run "
+alias sandboxmem="isolate --dir=etc --dir=boot --dir=home --dir=opt --dir=root --dir=sbin --dir=tmp --cg --cg-mem=4194304 --cg-timing --chdir=$(pwd) --full-env --mem=4194304  --processes=100 --meta=/tmp/boxmeta --run "
 
 export TERM=xterm-256color
 
 # Report CPU usage for commands running longer than 1 seconds
 REPORTTIME=1
+
+#always use a server for vim
+alias vim='vim --servername vim'
