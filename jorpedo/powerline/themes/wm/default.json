@@ -62,7 +62,8 @@
             {
                 "function": "powerline.segments.common.bat.battery",
                 "args": {
-                    "format": "{rem_time_hours:02}:{rem_time_minutes:02}",
+                    "rem_time_format": "%T",
+                    "format": "{rem_time}",
                     "original_health": true
                 }
             },
