@@ -94,13 +94,14 @@ export EDITOR="$VISUAL"
 source /usr/share/zsh-dwim/init.zsh
 
 
-alias comp="g++ -std=c++1z -O2 -Wall -Wextra "
-alias compd="g++ -std=c++1z -g3 -Weverything -Wno-shadow-field-in-constructor -Wno-c++98-compat -Wno-missing-prototypes -Wno-c++98-compat-pedantic -Wno-shorten-64-to-32 -Wno-missing-variable-declarations -Wno-exit-time-destructors -Wno-global-constructors -Wno-padded -Wno-sign-conversion -fsanitize=undefined -fsanitize=address -D_GLIBCXX_DEBUG "
-alias compo="clang++ -std=c++1z -O3 -march=native -Wall -Wextra "
+alias comp="g++ -std=c++14 -O2 -Wall -Wextra "
+alias compd="clang++ -std=c++14 -g3 -Weverything -Wno-shadow-field-in-constructor -Wno-c++98-compat -Wno-missing-prototypes -Wno-c++98-compat-pedantic -Wno-shorten-64-to-32 -Wno-missing-variable-declarations -Wno-exit-time-destructors -Wno-global-constructors -Wno-padded -Wno-sign-conversion -fsanitize=undefined -fsanitize=address -D_GLIBCXX_DEBUG "
+alias compo="clang++ -std=c++14 -O3 -march=native -Wall -Wextra "
 
 alias touchrestart="sudo rmmod psmouse ; sudo insmod /usr/lib/modules/$(uname -r)/kernel/drivers/input/mouse/psmouse.ko.gz"
 
 alias dcj='~/contests/codejam/dcj/dcj.sh'
+alias dcjd='~/contests/codejam/dcjdebug/dcj.sh'
 
 alias newsandbox="isolate --init --cg"
 alias sandbox="isolate --dir=etc --dir=boot --dir=home --dir=opt --dir=root --dir=sbin --dir=tmp --cg --cg-timing --chdir=$(pwd) --full-env --processes=100 --meta=/tmp/boxmeta --run "
