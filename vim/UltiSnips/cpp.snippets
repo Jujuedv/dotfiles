@@ -1,0 +1,33 @@
+snippet tpl "C++ simple template" b
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	$0
+}
+endsnippet
+snippet tplg "C++ codejam template" b
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+	$0
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	for(int i = 1; i <= T; ++i)
+	{
+		cout << "Case #" << t << ": ";
+		solve();
+	}
+}
+endsnippet

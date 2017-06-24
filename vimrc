@@ -34,6 +34,8 @@ Plug 'ctrlpvim/ctrlp.vim'               " fuzzy search for everything
 Plug 'scrooloose/nerdcommenter'         " neat commenting features
 Plug 'tpope/vim-repeat'                 " . repeats last command
 
+Plug 'gerw/vim-HiLinkTrace'             " for showing highlighting group of elements
+
 " we need to recompile ycm for semantic completion
 function! BuildYCM(info)
   " info is a dictionary with 3 fields
@@ -75,6 +77,9 @@ augroup lyla_custom
    autocmd!
    autocmd ColorScheme * highlight Folded ctermfg=255 ctermbg=022 cterm=italic
    autocmd ColorScheme * highlight Comment ctermfg=245
+   autocmd ColorScheme * highlight vimCommand ctermfg=046
+   autocmd ColorScheme * highlight vimFuncName ctermfg=039
+   autocmd ColorScheme * highlight Normal ctermbg=none
  augroup END
 " }}}
 " }}}
@@ -118,7 +123,9 @@ let g:airline_powerline_fonts=1              " use the powerline fonts
 let g:airline_theme='jujuedv'                " use my custom theme
 " }}}
 " Vimtex {{{
-let g:vimtex_compiler_latexmk = {
+" switch the latexmk flags to use lualatex
+function! LatexSwitchToLualatex()
+    let g:vimtex_compiler_latexmk = {
             \ 'options' : [
             \   '-pdf',
             \   '-lualatex',
@@ -128,6 +135,42 @@ let g:vimtex_compiler_latexmk = {
             \   '-interaction=nonstopmode',
             \ ],
             \}
+endfunction
+
+" switch the latexmk flags to use pdflatex
+function! LatexSwitchToPdflatex()
+    let g:vimtex_compiler_latexmk = {
+            \ 'options' : [
+            \   '-pdf',
+            \   '-verbose',
+            \   '-file-line-error',
+            \   '-synctex=1',
+            \   '-interaction=nonstopmode',
+            \ ],
+            \}
+endfunction
+
+" allows to toggle the used compiler
+function! LatexCompilerToggle()
+    if g:latex_compiler_is_lualatex
+        call LatexSwitchToPdflatex()
+        let g:latex_compiler_is_lualatex=0
+        :execute "normal \<Plug>(vimtex-reload)"
+        echo "now using pdflatex"
+    else
+        call LatexSwitchToLualatex()
+        let g:latex_compiler_is_lualatex=1
+        :execute "normal \<Plug>(vimtex-reload)"
+        echo "now using lualatex"
+    endif
+endfunction
+
+" shortcut to toggle the latex compiler
+nnoremap <leader>lp :call LatexCompilerToggle()<CR>
+
+" start with lualatex
+let g:latex_compiler_is_lualatex=1
+call LatexSwitchToLualatex()
 " }}}
 " Gundo {{{
 " toggle gundo
@@ -140,14 +183,14 @@ let g:syntastic_auto_loc_list=1             " show error window exactly when err
 let g:syntastic_check_on_open=1             " run check on open and saving
 let g:syntastic_check_on_wq=0               " skip checks on :wq
 let g:syntastic_cpp_check_header=1          " also check headers
-let g:syntastic_cpp_remove_include_errors=1 " ignore header errors
+"let g:syntastic_cpp_remove_include_errors=1 " ignore header errors
 
 let g:syntastic_error_symbol="\u2717"       " neat symbols
 let g:syntastic_warning_symbol="\u26a0"
 
 let g:syntastic_cpp_compiler='clang++'      " use clang++ instead of g++
 " which warnings to display?
-let g:syntastic_cpp_compiler_options='-std=c++1z -Weverything -Wno-shadow-field-in-constructor -Wno-c++98-compat -Wno-missing-prototypes -Wno-c++98-compat-pedantic -Wno-shorten-64-to-32 -Wno-missing-variable-declarations -Wno-exit-time-destructors -Wno-global-constructors -Wno-padded -Wno-sign-conversion'
+let g:syntastic_cpp_compiler_options='-std=c++14 -Weverything -Wno-shadow-field-in-constructor -Wno-c++98-compat -Wno-missing-prototypes -Wno-c++98-compat-pedantic -Wno-shorten-64-to-32 -Wno-missing-variable-declarations -Wno-exit-time-destructors -Wno-global-constructors -Wno-padded -Wno-sign-conversion'
 " do not show notes as errors (no they don't show at all)
 let g:syntastic_cpp_errorformat = ''.
             \     '%f:%l:%c: %trror: %m,' .
@@ -160,7 +203,8 @@ let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']   " run langua
 " }}}
 " YouCompleteMe {{{
 let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'     " the global compiler flags will be stored here
-let g:ycm_show_diagnostics_ui = 0                               " don't mess with syntastic
+" let g:ycm_show_diagnostics_ui = 0                               " don't mess with syntastic
+let g:ycm_extra_conf_globlist = ['~/contests/*']
 " }}}
 " NERDTree {{{
 " toogle NERDTree

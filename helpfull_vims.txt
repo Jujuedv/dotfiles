@@ -1,0 +1,2 @@
+<C-W>V => vertical split
+<C-W>H => horizontal split
