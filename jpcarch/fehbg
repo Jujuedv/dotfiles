@@ -1,0 +1,2 @@
+#!/bin/bash
+feh  --bg-scale --randomize /home/julian/projects/backgrounds/3840x2160/*green*

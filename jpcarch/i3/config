@@ -171,7 +171,7 @@ exec --no-startup-id xfce4-terminal --title=Scratch --hide-borders
 
 # resize window (you can also use the mouse for that)
 
-exec --no-startup-id powerline-lemonbar --i3 --click --height 32 -- -a 40 -b -f "DejaVu Sans Mono for Powerline-10" -f "FontAwesome-10"
+exec --no-startup-id powerline-lemonbar --i3 --click --height 20 -- -a 40 -b -f "DejaVu Sans Mono for Powerline-10" -f "FontAwesome-10"
  
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -216,8 +216,8 @@ set $warning    #005f5f
 ## looks
 
 #new_window pixel 4
-gaps inner 6
-gaps outer 4
+gaps inner 3
+gaps outer 2
 #smart_gaps on
 #smart_borders on
 
