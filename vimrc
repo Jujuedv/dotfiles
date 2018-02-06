@@ -36,13 +36,15 @@ Plug 'tpope/vim-repeat'                 " . repeats last command
 
 Plug 'gerw/vim-HiLinkTrace'             " for showing highlighting group of elements
 
+Plug 'jamessan/vim-gnupg'               " allow for opening of pgp files
+
 " we need to recompile ycm for semantic completion
 function! BuildYCM(info)
   " info is a dictionary with 3 fields
   " - name:   name of the plugin
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
+  if a:info.status == 'installed' || a:info.status == 'updated' || a:info.force
     !./install.py --all
   endif
 endfunction
@@ -202,6 +204,7 @@ let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']   " run langua
 
 " }}}
 " YouCompleteMe {{{
+" TODO If there are YCM startup errors you need libtinfo.so.5 which is the package libtinfo5 under arch
 let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'     " the global compiler flags will be stored here
 " let g:ycm_show_diagnostics_ui = 0                               " don't mess with syntastic
 let g:ycm_extra_conf_globlist = ['~/contests/*']
@@ -249,8 +252,39 @@ augroup END
 " Get a diff with the saved version of the current file
 command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
+function! Mirror(dict)
+    for [key, value] in items(a:dict)
+        let a:dict[value] = key
+    endfor
+    return a:dict
+endfunction
+
+function! S(number)
+    return submatch(a:number)
+endfunction
+
+" Swap different words (from https://stackoverflow.com/questions/3578549/easiest-way-to-swap-occurrences-of-two-strings-in-vim). For example:
+" :call SwapWords({'foo':'bar'})
+" :call SwapWords({'foo/bar':'foo/baz'}, '@')
+" :call SwapWords({'foo':'bar', 'baz':'quux'})
+function! SwapWords(dict, ...) range
+    let words = keys(a:dict) + values(a:dict)
+    let words = map(words, 'escape(v:val, "|")')
+    if(a:0 == 1)
+        let delimiter = a:1
+    else
+        let delimiter = '/'
+    endif
+    let pattern = '\v(' . join(words, '|') . ')'
+    exe a:firstline . ',' . a:lastline . 's' . delimiter . pattern . delimiter
+        \ . '\=' . string(Mirror(a:dict)) . '[S(0)]'
+        \ . delimiter . 'g'
+endfunction
+
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cnoremap w!! w !sudo tee > /dev/null %
+" }}}
+" Filetype specifics {{{
 " }}}
 " Custom remaps {{{
 " turn off search highlight
@@ -274,10 +308,14 @@ noremap <silent> <C-Up> gk
 noremap <silent> <C-Down> gj
 
 " move between windows if ctrl+shift is pressed
-nnoremap <silent> <C-S-Right> <C-w><Right>
-nnoremap <silent> <C-S-Left> <C-w><Left>
-nnoremap <silent> <C-S-Up> <C-w><Up>
-nnoremap <silent> <C-S-Down> <C-w><Down>
+noremap <silent> <C-S-Right> <C-w><Right>
+noremap <silent> <C-S-Left> <C-w><Left>
+noremap <silent> <C-S-Up> <C-w><Up>
+noremap <silent> <C-S-Down> <C-w><Down>
+lnoremap <silent> <C-S-Right> <C-w><Right>
+lnoremap <silent> <C-S-Left> <C-w><Left>
+lnoremap <silent> <C-S-Up> <C-w><Up>
+lnoremap <silent> <C-S-Down> <C-w><Down>
 
 " no more page up/down for holding shift for too long
 noremap <silent> <S-Up> <Up>

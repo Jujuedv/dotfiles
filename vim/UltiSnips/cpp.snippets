@@ -2,6 +2,26 @@ snippet tpl "C++ simple template" b
 #include <bits/stdc++.h>
 
 using namespace std;
+typedef long long ll;
+
+#define debug(x) (cerr << #x << ": " << (x) << endl)
+
+template<typename T>
+auto operator <<(ostream &out, T& container)
+	-> decltype(container.begin(), container.end(), out)
+{
+	bool first = true;
+	out << "[";
+	for(auto it = container.begin(); it != container.end(); ++it)
+	{
+		if(!first)
+			out << ", ";
+		out << *it;
+
+		first = false;
+	}
+	return out << "]";
+}
 
 int main()
 {

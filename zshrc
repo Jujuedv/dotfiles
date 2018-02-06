@@ -91,6 +91,8 @@ export QT_X11_NO_MITSHM=1
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
+export VIMRUNTIME="/usr/share/vim/vim80"
+
 source /usr/share/zsh-dwim/init.zsh
 
 
@@ -98,7 +100,7 @@ alias comp="g++ -std=c++14 -O2 -Wall -Wextra "
 alias compd="clang++ -std=c++14 -g3 -Weverything -Wno-shadow-field-in-constructor -Wno-c++98-compat -Wno-missing-prototypes -Wno-c++98-compat-pedantic -Wno-shorten-64-to-32 -Wno-missing-variable-declarations -Wno-exit-time-destructors -Wno-global-constructors -Wno-padded -Wno-sign-conversion -fsanitize=undefined -fsanitize=address -D_GLIBCXX_DEBUG "
 alias compo="clang++ -std=c++14 -O3 -march=native -Wall -Wextra "
 
-alias touchrestart="sudo rmmod psmouse ; sudo insmod /usr/lib/modules/$(uname -r)/kernel/drivers/input/mouse/psmouse.ko.gz"
+alias touchrestart="sudo rmmod psmouse ; sudo insmod /usr/lib/modules/$(uname -r)/kernel/drivers/input/mouse/psmouse.ko.xz"
 
 alias dcj='~/contests/codejam/dcj/dcj.sh'
 alias dcjd='~/contests/codejam/dcjdebug/dcj.sh'
@@ -114,3 +116,6 @@ REPORTTIME=1
 
 #always use a server for vim
 alias vim='vim --servername vim'
+
+#vim for less
+alias vless='$VIMRUNTIME/macros/less.sh'

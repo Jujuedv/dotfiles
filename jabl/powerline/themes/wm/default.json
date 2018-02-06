@@ -1,0 +1,146 @@
+{
+	"segments": {
+		"right": [
+			{
+				"function": "powerline.segments.common.players.gpmdp",
+				"args": {
+					"format": "{state_symbol} {artist} - {title} ({elapsed}/{total})",
+					"state_symbols" : {
+						"play" : "‣",
+						"pause" : "✘",
+						"stop" : "",
+						"fallback" : ""
+					},
+					"auto_disable":true
+                }
+            },
+			{
+				"function": "powerline.segments.common.volume.vol",
+				"args": {
+					"format": "♫ {volume:2.0%}",
+					"format_muted": "✘"
+                }
+            },
+            {
+                "function": "powerline.segments.common.net.wireless",
+                "args": {
+                    "device": "wlp5s0"
+                }
+            },
+            {
+                "function": "powerline.segments.common.net.internal_ip",
+                "args": {
+                    "interface": "enp4s0"
+                }
+            },
+            {
+                "function": "powerline.segments.common.net.internal_ip",
+                "args": {
+                    "interface": "wlp5s0"
+                }
+            },
+            {
+                "function": "powerline.segments.common.net.internal_ip",
+                "args": {
+                    "interface": "tun0"
+                }
+            },
+            {
+                "function": "powerline.segments.common.bat.battery",
+                "args": {
+                    "format": "♥ {capacity:3.2%}",
+                    "original_health": true
+                }
+            },
+            {
+                "function": "powerline.segments.common.bat.battery",
+                "args": {
+                    "format": "{status}",
+                    "original_health": true
+                }
+            },
+            {
+                "function": "powerline.segments.common.bat.battery",
+                "args": {
+                    "rem_time_format": "%T",
+                    "format": "{rem_time}",
+                    "original_health": true
+                }
+            },
+			{
+                "function": "powerline.segments.common.sys.system_load",
+                "args": {
+                    "short": true
+                }
+			},
+			{
+                "function": "powerline.segments.common.net.network_load",
+                "args": {
+                    "interface": "auto"
+                }
+			},
+            {
+                "function": "powerline.segments.common.time.date",
+                "args": {
+                    "format": "%m-%d"
+                }
+			},
+			{
+                "function": "powerline.segments.common.time.date",
+				"name": "date",
+				"args": {
+					"format": "%H:%M",
+					"istime": true
+				}
+			}
+		],
+        "left": [
+            {
+                "function": "powerline.segments.common.env.user"
+            },
+            {
+                "function": "powerline.segments.common.net.hostname"
+            },
+            {
+                "function": "powerline.segments.i3wm.mode",
+                "args": {
+                    "names": {
+                        "default": null,
+                        "resize": "Resize: n|d width, t|r height (10px), Arrow keys (5px)",
+                        "gaps": "Gaps: (o) outer, (i) inner",
+                        "gaps-o": "Outer Gaps: p|m|0 (local), Shift + p|m|0 (global)",
+                        "gaps-i": "Inner Gaps: p|m|0 (local), Shift + p|m|0 (global)"
+                    }
+                }
+            },
+            {
+                "function": "powerline.segments.i3wm.workspaces",
+                "draw_inner_divider": true,
+                "draw_soft_divider": true,
+				"args": {
+					"show_multiple_icons": true,
+                    "icons": {
+                        "Xfce4-terminal": "",
+                        "Chromium": "",
+                        "Steam": "",
+                        "jetbrains-idea": "",
+                        "jetbrains-pycharm-ce": "",
+                        "jetbrains-clion": "",
+                        "Gimp": "",
+                        "Pavucontrol": "",
+                        "Thunderbird": "",
+                        "Thunar": "",
+                        "Skype": "",
+                        "TelegramDesktop": "",
+                        "feh": "",
+                        "firefox": "",
+                        "Evince": "",
+                        "libreoffice-calc": "",
+                        "libreoffice-writer": "",
+                        "multiple": ""
+                    }
+				}
+            }
+        ]
+	}
+}
