@@ -285,6 +285,12 @@ endfunction
 cnoremap w!! w !sudo tee > /dev/null %
 " }}}
 " Filetype specifics {{{
+augroup sage
+    " Sage settings (from Franco Saliola)
+    autocmd BufRead,BufNewFile *.sage,*.pyx,*.spyx set filetype=python
+    autocmd Filetype python set tabstop=4|set shiftwidth=4|set expandtab
+    autocmd FileType python set makeprg=sage\ -b\ &&\ sage\ -t\ %
+augroup END
 " }}}
 " Custom remaps {{{
 " turn off search highlight

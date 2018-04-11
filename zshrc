@@ -84,7 +84,7 @@ export PATH=$HOME/bin:/usr/local/bin:/opt/android-sdk/platform-tools/:$PATH
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias netrestart="sudo systemctl restart netctl-auto@wlp5s0.service"
+alias netrestart="sudo systemctl restart netctl-auto@wlp2s0.service"
 
 export QT_X11_NO_MITSHM=1
 

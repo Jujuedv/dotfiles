@@ -1,2 +1,2 @@
 #!/bin/sh
-feh  --bg-scale --no-fehbg '/home/julian/projects/MandelBuddhaManager/render/34.png' 
+feh  --bg-scale --no-fehbg '/home/julian/bg.png'

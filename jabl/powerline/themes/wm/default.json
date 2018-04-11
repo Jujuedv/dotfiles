@@ -1,42 +1,36 @@
 {
-	"segments": {
-		"right": [
-			{
-				"function": "powerline.segments.common.players.gpmdp",
-				"args": {
-					"format": "{state_symbol} {artist} - {title} ({elapsed}/{total})",
-					"state_symbols" : {
-						"play" : "‣",
-						"pause" : "✘",
-						"stop" : "",
-						"fallback" : ""
-					},
-					"auto_disable":true
+    "segments": {
+        "right": [
+            {
+                "function": "powerline.segments.common.players.gpmdp",
+                "args": {
+                    "format": "{state_symbol} {artist} - {title} ({elapsed}/{total})",
+                    "state_symbols" : {
+                        "play" : "‣",
+                        "pause" : "✘",
+                        "stop" : "",
+                        "fallback" : ""
+                    },
+                    "auto_disable":true
                 }
             },
-			{
-				"function": "powerline.segments.common.volume.vol",
-				"args": {
-					"format": "♫ {volume:2.0%}",
-					"format_muted": "✘"
+            {
+                "function": "powerline.segments.common.volume.vol",
+                "args": {
+                    "format": "♫ {volume:2.0%}",
+                    "format_muted": "✘"
                 }
             },
             {
                 "function": "powerline.segments.common.net.wireless",
                 "args": {
-                    "device": "wlp5s0"
+                    "device": "wlp2s0"
                 }
             },
             {
                 "function": "powerline.segments.common.net.internal_ip",
                 "args": {
-                    "interface": "enp4s0"
-                }
-            },
-            {
-                "function": "powerline.segments.common.net.internal_ip",
-                "args": {
-                    "interface": "wlp5s0"
+                    "interface": "wlp2s0"
                 }
             },
             {
@@ -49,14 +43,16 @@
                 "function": "powerline.segments.common.bat.battery",
                 "args": {
                     "format": "♥ {capacity:3.2%}",
-                    "original_health": true
+                    "original_health": true,
+                    "bat": 1
                 }
             },
             {
                 "function": "powerline.segments.common.bat.battery",
                 "args": {
                     "format": "{status}",
-                    "original_health": true
+                    "original_health": true,
+                    "bat": 1
                 }
             },
             {
@@ -64,39 +60,69 @@
                 "args": {
                     "rem_time_format": "%T",
                     "format": "{rem_time}",
-                    "original_health": true
+                    "original_health": true,
+                    "bat": 1
                 }
             },
-			{
+            {
+                "function": "powerline.segments.common.generic.generic_shell",
+                "args": {
+                    "command": "echo $(($(cat /sys/class/power_supply/BAT1/power_now)/1000000))W"
+                }
+            },
+            {
                 "function": "powerline.segments.common.sys.system_load",
                 "args": {
                     "short": true
                 }
-			},
-			{
+            },
+            {
                 "function": "powerline.segments.common.net.network_load",
                 "args": {
                     "interface": "auto"
                 }
-			},
+            },
             {
                 "function": "powerline.segments.common.time.date",
                 "args": {
                     "format": "%m-%d"
                 }
-			},
-			{
+            },
+            {
                 "function": "powerline.segments.common.time.date",
-				"name": "date",
-				"args": {
-					"format": "%H:%M",
-					"istime": true
-				}
-			}
-		],
+                "name": "date",
+                "args": {
+                    "format": "%H:%M",
+                    "istime": true
+                }
+            }
+        ],
         "left": [
             {
                 "function": "powerline.segments.common.env.user"
+            },
+            {
+                "function":             "powerline.segments.randr.srot",
+                "args": {
+                    "name":             "mode",
+                    "output":           "eDP1",
+                    "mapped_inputs": [
+                        "Wacom"
+                    ],
+                    "touchpads": [
+                    ],
+                    "icons": {
+                        "auto":         "",
+                        "locked":       ""
+                    },
+                    "additional_controls": [
+                        [ " {touch_output}", ["srot:tc"] ],
+                        [ " {managed_output}", ["srot:rc"] ]
+                    ],
+                    "sensor_is_unsigned": true,
+                    "sensor_max_value": 256,
+                    "interval": 2
+                }
             },
             {
                 "function": "powerline.segments.common.net.hostname"
@@ -117,8 +143,8 @@
                 "function": "powerline.segments.i3wm.workspaces",
                 "draw_inner_divider": true,
                 "draw_soft_divider": true,
-				"args": {
-					"show_multiple_icons": true,
+                "args": {
+                    "show_multiple_icons": true,
                     "icons": {
                         "Xfce4-terminal": "",
                         "Chromium": "",
@@ -139,8 +165,8 @@
                         "libreoffice-writer": "",
                         "multiple": ""
                     }
-				}
+                }
             }
         ]
-	}
+    }
 }
