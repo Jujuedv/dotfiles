@@ -2,6 +2,7 @@
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME
 " }}}
 " Plugins {{{
 call plug#begin('~/.vim/plugged')
@@ -291,6 +292,10 @@ augroup sage
     autocmd Filetype python set tabstop=4|set shiftwidth=4|set expandtab
     autocmd FileType python set makeprg=sage\ -b\ &&\ sage\ -t\ %
 augroup END
+"augroup noplaintex
+    " Sage settings (from Franco Saliola)
+"    autocmd BufRead,BufNewFile *.tex set filetype=tex
+"augroup END
 " }}}
 " Custom remaps {{{
 " turn off search highlight

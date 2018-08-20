@@ -91,7 +91,7 @@ export QT_X11_NO_MITSHM=1
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-export VIMRUNTIME="/usr/share/vim/vim80"
+export VIMRUNTIME="/usr/share/vim/vim81"
 
 source /usr/share/zsh-dwim/init.zsh
 
